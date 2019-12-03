@@ -6,7 +6,7 @@ import os, sys, MeCab, json, re, glob
 
 r_men = re.compile('@(\w)+\s')
 r_kigou = re.compile('[!"#$%&\'\\\\()*+,-./:;<=>?@[\\]^_`{|}~「」〔〕“”〈〉『』【】＆＊・（）＄＃＠。、？！｀＋￥％]')
-r_url = re.compile('http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)?')
+r_url = re.compile('http(s)?://([-\w]+\.)+[-\w]+(/[- ./?%\w&=]*)?')
 
 sakura = set(['桜', 'さくら', 'サクラ'])
 
@@ -39,29 +39,29 @@ def morpho_text(text, mecab):
 
 def text_cleaning(s):
   s = r_men.sub('', s)
-  s = r_kigou.sub('', s)
   s = r_url.sub('', s)
+  s = r_kigou.sub('', s)
   return s
 
-def insert(line, p):
- jsonline = re.sub('^\d*\t', '', line)
- try:
-  textline = json.loads(jsonline)
-  pname = textline['reverse_geo']['pname']
-  if pname == p:
-    text = text_cleaning(textline['text'])
-    morpho = morpho_text(text, mecab)
-    created_at = textline['created_at']
-    sakura_twi = 1 if (len(sakura & set(morpho)) > 0) else 0
-    insert_line = {
-      'pname' : pname,
-      'text' : text,
-      'morpho_text' : ' '.join(morpho),
-      'sakura_twi' : sakura_twi,
-      'created_at': created_at,
-      'created_at_iso' : parser.parse(created_at).astimezone(timezone('Asia/Tokyo')).isoformat()
-    }
-    col.insert_one(insert_line)                                                                                                 }
+def insert(line, p, c, mecab):
+  jsonline = re.sub('^\d*\t', '', line)
+  try:
+    textline = json.loads(jsonline)
+    pname = textline['reverse_geo']['pname']
+    if pname == p:
+      text = text_cleaning(textline['text'])
+      morpho = morpho_text(text, mecab)
+      created_at = textline['created_at']
+      sakura_twi = 1 if (len(sakura & set(morpho)) > 0) else 0
+      insert_line = {
+        'pname' : pname,
+        'text' : text,
+        'morpho_text' : ' '.join(morpho),
+        'sakura_twi' : sakura_twi,
+        'created_at': created_at,
+        'created_at_iso' : parser.parse(created_at).astimezone(timezone('Asia/Tokyo')).isoformat()
+      }
+      c.insert_one(insert_line)
   except Exception:
     pass
   return
@@ -69,8 +69,7 @@ def insert(line, p):
 def main():
   mecab = setup_mecab()
   db = setup_mongo()
-  col = db['twi_syun_2014_hk']
-  
+
   d = {
     'hk': {
       'pname': '北海道',
@@ -87,13 +86,15 @@ def main():
   }
 
   for key in d:
-    for filename in d[key]['file_lst']:
-      filename = '/now24/a.saito/data_2014/2014-' + f + '.txt'
+    for date in d[key]['file_lst']:
+      col = db['season_' + key]
+      month, day = date[:2], date[2:]
+      filename = '/now24/a.saito/data_2014/2014-' + month + '/json_rg_2014-' + month + '-' + day + '.txt'
       with open(filename, 'r') as f:
         print('##### insert ' + filename + ' ...')
         line = f.readline()
         while line:
-          insert(line, d[key]['pname'])
+          insert(line, d[key]['pname'], col, mecab)
           line = f.readline()
 
 main()

@@ -12,7 +12,7 @@ def pmi(sw, w, s, N):
   pmi = math.log2(((sw + 1) * N) / (w * s))
   return(pmi)
 
-def soa(sw, w, s, N):
+def soa(ns_w, sw, w, s, N):
   pmi = pmi(sw, w, s, N)
   nw_pmi = pmi(sw, N - w, s, N)
   soa = pmi - nw_pmi
