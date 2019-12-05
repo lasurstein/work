@@ -6,7 +6,7 @@ import os, sys, MeCab, json, re, glob
 
 r_men = re.compile('@(\w)+\s')
 r_kigou = re.compile('[!"#$%&\'\\\\()*+,-./:;<=>?@[\\]^_`{|}~「」〔〕“”〈〉『』【】＆＊・（）＄＃＠。、？！｀＋￥％]')
-r_url = re.compile('http(s)?://([-\w]+\.)+[-\w]+(/[- ./?%\w&=]*)?')
+r_url = re.compile('http(s)?://t.co/\w+')
 
 sakura = set(['桜', 'さくら', 'サクラ'])
 
