@@ -18,7 +18,7 @@ def setup_mecab():
 
 def setup_mongo():
   connection = MongoClient()
-  db = connection['2015_hk_twi']
+  db = connection['2015_hk_twi_1208']
   print('mongoDB ready')
   return db
 

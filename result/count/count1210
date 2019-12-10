@@ -1,0 +1,63 @@
+mongoDB ready
+### pmi
+###	10
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 10
+ limit: 9.146658238893052, words_count: 62
+###	20
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 20
+ limit: 8.146658238893052, words_count: 101
+###	30
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 30
+ limit: 7.239767643284535, words_count: 147
+###	40
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 40
+ limit: 6.33930331683545, words_count: 204
+###	50
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 50
+ limit: 5.561695738171897, words_count: 247
+###	60
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 60
+ limit: 4.62309628283604, words_count: 295
+###	70
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 70
+ limit: 3.6230962828360407, words_count: 344
+###	80
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 80
+ limit: 2.67633830411302, words_count: 392
+###	90
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 90
+ limit: 1.6023377226692432, words_count: 442
+###	100
+file: /now24/a.saito/work/result/1208/hk_pmi.txt, rate: 100
+ limit: 0.029015137503961386, words_count: 490
+### soa
+###	10
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 10
+ limit: 9.141558435713524, words_count: 71
+###	20
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 20
+ limit: 8.141558435713524, words_count: 108
+###	30
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 30
+ limit: 7.556595934992367, words_count: 148
+###	40
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 40
+ limit: 6.404592841547317, words_count: 198
+###	50
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 50
+ limit: 5.556595934992367, words_count: 248
+###	60
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 60
+ limit: 4.61799647965651, words_count: 295
+###	70
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 70
+ limit: 3.617996479656511, words_count: 344
+###	80
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 80
+ limit: 2.682126817076226, words_count: 392
+###	90
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 90
+ limit: 1.6075798637111718, words_count: 441
+###	100
+file: /now24/a.saito/work/result/1208/hk_soa.txt, rate: 100
+ limit: 0.02651478555181349, words_count: 490
