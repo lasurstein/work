@@ -14,10 +14,15 @@ text [tab] sakura_label
 from pymongo import MongoClient, DESCENDING
 from datetime import datetime, timedelta
 import pandas as pd
-from .s_lib import setup_mongo￥
+from .s_lib import setup_mongo
 
 result_dir = '/now24/a.saito/work/result/'
 
+def setup_mongo(dbname):
+  connection = MongoClient()
+  db = connection[dbname]
+  print('mongoDB ready')
+  return db
 
 def daterange(start, end):
     for n in range((end - start).days):
