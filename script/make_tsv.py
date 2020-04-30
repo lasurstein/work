@@ -14,7 +14,7 @@ text [tab] sakura_label
 from pymongo import MongoClient, DESCENDING
 from datetime import datetime, timedelta
 import pandas as pd
-from .s_lib import setup_mongo￥
+from .s_lib import setup_mongo
 
 result_dir = '/now24/a.saito/work/result/'
 

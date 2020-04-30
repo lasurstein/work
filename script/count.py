@@ -2,7 +2,7 @@ from pymongo import MongoClient, DESCENDING
 import pandas as pd
 from datetime import datetime, timedelta
 
-result_dir = '/now24/a.saito/work/result/1208/'
+result_dir = '/now24/a.saito/work/result/relation_word/'
 pname = '北海道'
 
 def setup_mongo(dbname):
@@ -56,12 +56,20 @@ def main():
   end = datetime.strptime('20151231', '%Y%m%d')
 
   rates = range(10, 101, 10)
-  for ext in ['pmi', 'soa']:
-    print('### ' + ext)
-    filename = result_dir + 'hk_' + ext + '.txt'
+  #for ext in ['pmi', 'soa']:
+  for p in ['hk', 'tk', 'is']:
+    ext = 'soa'
+    print('### ' + ext + '_' + p)
+    tmp_words = []
+    filename = result_dir + p + '_' + ext + '.txt'
     for rate in rates:
       print('###\t' + str(rate))
       words = set(get_relation_words(filename, rate))
+      #print(set(words) - set(tmp_words))
+      
+      tmp_words = words
+      continue
+
       stwi = []
       for date in daterange(start, end):  
         today = date.isoformat()
