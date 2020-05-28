@@ -1,0 +1,88 @@
+mongoDB ready
+###	70
+file: /now24/a.saito/work/result/relation_word/hk_soa.txt, rate: 70
+ limit: 3.617996479656511, words_count: 344
+01
+
+db count:  468249
+sakura: 39
+other: 468210
+01/sakura: 39
+01other: 39
+02
+
+db count:  407355
+sakura: 95
+other: 875509
+02/sakura: 56
+02other: 56
+03
+
+db count:  481945
+sakura: 211
+other: 1357338
+03/sakura: 116
+03other: 116
+04
+
+db count:  369105
+sakura: 498
+other: 1726156
+04/sakura: 287
+04other: 287
+05
+
+db count:  320293
+sakura: 1020
+other: 2045927
+05/sakura: 522
+05other: 522
+06
+
+db count:  357966
+sakura: 1068
+other: 2403845
+06/sakura: 48
+06other: 48
+07
+
+db count:  450319
+sakura: 1103
+other: 2854129
+07/sakura: 35
+07other: 35
+08
+
+db count:  617974
+sakura: 1158
+other: 3472048
+08/sakura: 55
+08other: 55
+09
+
+db count:  524526
+sakura: 1200
+other: 3996532
+09/sakura: 42
+09other: 42
+10
+
+db count:  422445
+sakura: 1238
+other: 4418939
+10/sakura: 38
+10other: 38
+11
+
+db count:  399489
+sakura: 1266
+other: 4818400
+11/sakura: 28
+11other: 28
+12
+
+db count:  539106
+sakura: 1309
+other: 5357463
+12/sakura: 43
+12other: 43
