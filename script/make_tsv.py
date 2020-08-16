@@ -93,9 +93,9 @@ def get_relation_words(relation_words_file, rate):
 #     print(date)
 #     return date
 
-
+sakura = ['桜', 'さくら', 'サクラ']
 # BERT用TSVデータ作成
-def make_data(db, p, rate, relation_words_file):
+def make_data(db, p, rate, relation_words_file, file_lst):
     filename = relation_words_file
     print('###\t' + str(rate))
 
@@ -110,23 +110,28 @@ def make_data(db, p, rate, relation_words_file):
     other_lines = []
     month = [str(i).zfill(2) for i in range(1, 13)]
     s_l, o_l = 0, 0
-    for m in month:
-        print(str(m) + '\n')
-        collection = db['2014_' + m + '_' + p]
-        twis = collection.find()
 
-        for twi in twis:
-            text = twi['text'].replace('\n', ' ')
-            if (twi['sakura_twi'] == 1) and (len(set(twi['morpho_text'].split()) & words) > 0):
-                sakura_lines.append("1\t{}\t{}".format(text, twi['created_at']))
-            else:
-                other_lines.append("0\t{}\t{}".format(text, twi['created_at']))
+    collection = db[p + '2014']
+    twis = collection.find()
 
-        print("db count:  {}".format(collection.find().count()))
-        print("sakura: {0}\nother: {1}".format(len(sakura_lines), len(other_lines)))
-        print("{0}/sakura: {1}\n{0}other: {1}".format(m, len(sakura_lines)-s_l, len(other_lines)-o_l))
-        s_l = len(sakura_lines)
-        o_l = len(other_lines)
+    for twi in twis:
+        text = twi['text'].replace('\n', ' ')
+        morpho = [w.rsplit("/",1)[0] for w in twi['morpho_text'].split(' ')]
+        created_day = twi['created_at_iso'][5:7] + twi['created_at_iso'][8:10]
+        # print(morpho, created_day, created_day in file_lst)
+        # if (created_day in file_lst) and len(set(morpho) & words) > 0:
+        #     print(created_day, file_lst, set(morpho) & words, twi['sakura_twi'])
+        #     return
+        if ((created_day in file_lst) and len(set(sakura) & set(morpho)) > 0) and (len(set(morpho) & words) > 0):
+            sakura_lines.append("1\t{}\t{}".format(text, twi['created_at']))
+        else:
+            other_lines.append("0\t{}\t{}".format(text, twi['created_at']))
+
+    print("db count:  {}".format(collection.find().count()))
+    print("sakura: {0}\nother: {1}".format(len(sakura_lines), len(other_lines)))
+    print("add sakura: {0}\n add other: {1}".format(len(sakura_lines)-s_l, len(other_lines)-o_l))
+    s_l = len(sakura_lines)
+    o_l = len(other_lines)
 
     other_limit_lines = random.sample(other_lines, s_l)
     random.shuffle(sakura_lines)
@@ -135,19 +140,19 @@ def make_data(db, p, rate, relation_words_file):
     o_limit = s_limit
 
     train_path = '/now24/a.saito/work/train_{}_{}.tsv'.format(p, str(rate))
-    test_path = '/now24/a.saito/work/test_{}_{}.tsv'.format(p, str(rate))
+    # test_path = '/now24/a.saito/work/test_{}_{}.tsv'.format(p, str(rate))
     dev_path = '/now24/a.saito/work/dev_{}_{}.tsv'.format(p, str(rate))
 
     with open(train_path, 'w') as f:
         for l in range(s_limit * 2, s_l):
             f.write(sakura_lines[l] + '\n')
             f.write(other_limit_lines[l] + '\n')
-    with open(test_path, 'w') as f:
-        for l in range(0, s_limit):
-            f.write(sakura_lines[l] + '\n')
-            f.write(other_limit_lines[l] + '\n')
+    # with open(test_path, 'w') as f:
+    #     for l in range(0, s_limit):
+    #         f.write(sakura_lines[l] + '\n')
+    #         f.write(other_limit_lines[l] + '\n')
     with open(dev_path, 'w') as f:
-        for l in range(s_limit, s_limit * 2):
+        for l in range(0, s_limit * 2):
             f.write(sakura_lines[l] + '\n')
             f.write(other_limit_lines[l] + '\n')
 
@@ -156,12 +161,12 @@ def main():
     d = {
         'hk': {
             'pname': '北海道',
+            'file_lst': ['0429', '0430', '0501', '0502'],
         },
-        # 'is': {
-        #     'pname': '石川県',
-        #     'file_lst': ['0401', '0402', '0403', '0404', '0405', '0406', '0407'],
-        #     'm_lst': ['04']
-        # },
+        'is': {
+            'pname': '石川県',
+            'file_lst': ['0401', '0402', '0403', '0404', '0405', '0406', '0407'],
+        },
         # 'tk': {
         #     'pname': '東京都',
         #     'file_lst': ['0325', '0326', '0327', '0328', '0329', '0330'],
@@ -169,12 +174,12 @@ def main():
         # }
     }
 
-    db = setup_mongo('2014_twi')
+    db = setup_mongo('tweet2014')
 
-    for p, v in d.items():
+    for p in d.keys():
         filename = '/now24/a.saito/work/result/relation_word/{0}_soa.txt'.format(p)
         rate = 70
-        make_data(db, p, rate, filename)
+        make_data(db, p, rate, filename, d[p]['file_lst'])
 
 
 main()

@@ -11,8 +11,11 @@ text
 """
 
 from pymongo import MongoClient, DESCENDING
+import logging
 
 result_dir = '/now24/a.saito/work/hottoSNS-bert'
+
+logging.basicConfig(filename='/now24/a.saito/work/script/log/0730_2015_maketsv_hkis.log', level=logging.DEBUG)
 
 
 def setup_mongo(dbname):
@@ -28,7 +31,7 @@ def make_data(db, p):
     lines = []
     for m in month:
         print('\n\n\n  ###################' + str(m))
-        collection = db['2015-' + m]
+        collection = db[p + '2015']
         twis = collection.find()
 
         for twi in twis:
@@ -39,7 +42,7 @@ def make_data(db, p):
 
         print("{0}:db count:  {1}".format(m, len(lines)))
 
-    test_path = '/now24/a.saito/work/0625test_{}_2015.tsv'.format(p)
+    test_path = '/now24/a.saito/work/0730test_{}_2015.tsv'.format(p)
     with open(test_path, 'w') as f:
         for l in lines:
             f.write(l + '\n')
@@ -49,11 +52,11 @@ def main():
     d = {
         'hk': {
             'pname': '北海道',
-            'dbname': '2015_hk_twi_1208',
+            'dbname': 'tweet2015',
         },
         'is': {
             'pname': '石川県',
-            'dbname': '2015_is_twi',
+            'dbname': 'tweet2015',
         },
         # 'tk': {
         #     'pname': '東京都',
